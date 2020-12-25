@@ -3,14 +3,22 @@ $(function () {
 
         //alert("submit")
         $.ajax({
-            url:"main.html",
+            //url:"../view/main.html",
+            url:"../data/login.json",
             type:"get",
             //dataType:"x-www-form-urlencoded",
             data:$("#login_form").serialize(),//请求数据，使用表单的数据
             contentType:"json",//响应数据类型
             success:function (data) {
-                //alert(JSON.stringify(data))//json对象转字符串
-                window.location.href="main.html"
+                //返回数据success为true，跳转到main，反之提示报错信息
+                if (data.success) {
+                    window.location.href="main.html"
+                }else {
+                    alert(JSON.stringify(data))//json对象转字符串
+                }
+            },
+            error:function (request,textStatus,error) {//只有当响应状态码为4xx，5xx才进入error
+                alert(request.status)
             }
         })
         return false;
